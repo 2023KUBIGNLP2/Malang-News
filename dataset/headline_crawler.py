@@ -20,7 +20,7 @@ def save_csv(news_infos, check_start, check_end, save_path):
     return list()
 
 
-def crawler(delay, save_every, section, start_iter, end_iter, save_path):
+def headline_crawler(delay, save_every, section, start_iter, end_iter, save_path):
     news_infos = []  # title, link
     check_start = start_iter
     # 2023년 8월 25일 기준 IT
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         "--save_path", default="../data/user_info", type=str, help="저장할 경로를 지정합니다."
     )
     args = parser.parse_args()
-    crawler(
+    headline_crawler(
         args.delay,
         args.save_every,
         args.section,
