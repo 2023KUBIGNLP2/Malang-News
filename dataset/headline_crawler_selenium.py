@@ -44,6 +44,7 @@ def headline_crawler(
     for i in tqdm(range(start_page, end_page + 1)):
         url = f"{base_url}{i}"  # set page
         driver.get(url)
+        driver.refresh()  # to avoid error that element is no longer in the DOM, or it changed
         newses = driver.find_elements_by_css_selector('a[class*="airsGParam"]')
         for i, news in enumerate(newses):
             news_info = []
@@ -74,7 +75,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         "--save_every",
-        default=1000,
+        default=500,
         type=int,
         help="뉴스 기사가 csv로 저장되는 개수를 설정합니다.",
     )
@@ -85,7 +86,7 @@ if __name__ == "__main__":
         "--start_page", default=1, type=int, help="Crawling 시작 페이지를 지정합니다."
     )
     parser.add_argument(
-        "--end_page", default=1000, type=int, help="Crawling 종료 페이지를 지정합니다."
+        "--end_page", default=70, type=int, help="Crawling 종료 페이지를 지정합니다."
     )
     parser.add_argument(
         "-dp",
