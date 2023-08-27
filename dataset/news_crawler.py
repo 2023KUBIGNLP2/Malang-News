@@ -38,15 +38,14 @@ def drop_duplicated_csv(csv_list):
 
 def save_csv(all_news, id, idx, save_path, csv_names):
     print(f"..저장하는 뉴스의 개수: {idx}.. ")
-    print(f"summary_{csv_names[id][-22:-4]}.csv")
+    date = csv_names[id].split("_")
+    print(f"summary_{date[-2]}_{date[-1]}")
     if not os.path.exists(save_path):
         os.mkdir(save_path)
 
     df = pd.DataFrame(all_news, columns=["body", "summary"])
-    df.to_csv(
-        os.path.join(save_path, f"summary_{csv_names[id][-22:-4]}.csv"), index=False
-    )
-    print(f"저장 완료! 'summary_{csv_names[id][-22:-4]}.csv'")
+    df.to_csv(os.path.join(save_path, f"summary_{date[-2]}_{date[-1]}"), index=False)
+    print(f"저장 완료! 'summary_{date[-2]}_{date[-1]}'")
 
 
 def load_url(csv_path):
@@ -63,6 +62,7 @@ def news_crawler(delay, sleep_delay, csv_path, driver_path, save_path):
     driver = webdriver.Chrome(driver_path)
     csv_urls, csv_names = load_url(csv_path)
     for id, urls in enumerate(csv_urls):
+        print(csv_names[id])
         news_texts = []
         for i, url in tqdm(enumerate(urls)):
             try:
