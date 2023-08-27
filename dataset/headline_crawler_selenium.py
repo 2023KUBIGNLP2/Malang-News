@@ -9,8 +9,8 @@ from selenium import webdriver
 
 
 def save_csv(news_infos, check_start, check_end, save_path, kst):
-    print(f"..저장하는 뉴스의 번호: {check_start}-{check_end}..")
     print(f"..저장하는 뉴스의 개수: {len(news_infos)}..")
+    print(f"..저장하는 뉴스의 번호: {check_start}-{check_end - 1}..")
     now = datetime.datetime.now(kst)
     if not os.path.exists(save_path):
         os.mkdir(save_path)
@@ -19,12 +19,12 @@ def save_csv(news_infos, check_start, check_end, save_path, kst):
     df.to_csv(
         os.path.join(
             save_path,
-            f"headline_{check_start}-{check_end}_{now.year}-{now.month}-{now.day}_{now.hour}-{now.minute}-{now.second}.csv",
+            f"headline_{check_start}-{check_end - 1}_{now.year}-{now.month}-{now.day}_{now.hour}-{now.minute}-{now.second}.csv",
         ),
         index=False,
     )
     print(
-        f"저장 완료! 'headline_{check_start}-{check_end}_{now.year}-{now.month}-{now.day}_{now.hour}-{now.minute}-{now.second}.csv'"
+        f"저장 완료! 'headline_{check_start}-{check_end - 1}_{now.year}-{now.month}-{now.day}_{now.hour}-{now.minute}-{now.second}.csv'"
     )
     return list()
 
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         "--save_every",
-        default=20000,
+        default=1000,
         type=int,
         help="뉴스 기사가 csv로 저장되는 개수를 설정합니다.",
     )
