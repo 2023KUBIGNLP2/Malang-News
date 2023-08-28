@@ -23,7 +23,7 @@ def drop_duplicated_csv(csv_list):
     print("..중복된 기사 drop..")
     csv_cleaned = []
     csv_names = []
-    print(len(csv_list))
+    print("csv의 개수:", len(csv_list))
     for csv in csv_list:
         csv_cleaned.append(csv[0].drop_duplicates())
         csv_names.append(csv[1])
@@ -33,14 +33,12 @@ def drop_duplicated_csv(csv_list):
     return csv_cleaned, csv_names
 
 
-def save_csv(all_news, id, idx, save_path, csv_names):
-    print(f"..저장하는 뉴스의 개수: {idx}.. ")
+def save_csv(all_news, id, save_path, csv_names):
     date = csv_names[id].split("_")
-    print(f"summary_{date[-2]}_{date[-1]}")
     if not os.path.exists(save_path):
         os.mkdir(save_path)
-
     df = pd.DataFrame(all_news, columns=["body", "summary"])
+    print(f"..저장하는 뉴스의 개수: {len(df)}.. ")
     df.to_csv(os.path.join(save_path, f"summary_{date[-2]}_{date[-1]}"), index=False)
     print(f"저장 완료! 'summary_{date[-2]}_{date[-1]}'")
 
@@ -58,10 +56,11 @@ def load_url(csv_path):
 def news_crawler(delay, sleep_delay, csv_path, driver_path, save_path):
     driver = webdriver.Chrome(driver_path)
     csv_urls, csv_names = load_url(csv_path)
+    print("..크롤링 시작..")
     for id, urls in enumerate(csv_urls):
         print(csv_names[id])
         news_texts = []
-        for i, url in tqdm(enumerate(urls)):
+        for url in tqdm(urls):
             try:
                 bodyandsummary = []
                 driver.get(url)
@@ -72,10 +71,16 @@ def news_crawler(delay, sleep_delay, csv_path, driver_path, save_path):
                     br.replace_with("\n")
                 article_text = article.get_text()
 
-                # 원하지 않는 부분 제외
-                exclude_div = article.find("em")
-                final_text = article_text.replace(exclude_div.get_text(), " ")
-                bodyandsummary.append(final_text)
+                # <article> 태그 내의 내용 중 <em> 태그(주석) 제외
+                exclude_em = article.find_all("em")
+                for em_tag in exclude_em:
+                    article_text = article_text.replace(em_tag.get_text(), " ")
+
+                # <article> 태그 내의 내용 중 <strong> 태그(강조 반복) 제외
+                exclude_strong = article.find_all("strong")
+                for strong_tag in exclude_strong:
+                    article_text = article_text.replace(strong_tag.get_text(), " ")
+                bodyandsummary.append(article_text)
 
                 driver.find_element_by_xpath('//*[@id="_SUMMARY_BUTTON"]/a').click()
                 time.sleep(sleep_delay)
@@ -89,9 +94,8 @@ def news_crawler(delay, sleep_delay, csv_path, driver_path, save_path):
 
             if delay:
                 time.sleep(delay)
-            temp = i
 
-        save_csv(news_texts, id, temp + 1, save_path, csv_names)
+        save_csv(news_texts, id, save_path, csv_names)
 
 
 if __name__ == "__main__":
