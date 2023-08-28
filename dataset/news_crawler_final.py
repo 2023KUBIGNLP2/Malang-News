@@ -84,7 +84,6 @@ def news_crawler(delay, sleep_delay, csv_path, driver_path, save_path):
                 )
                 bodyandsummary.append(news.text)
                 news_texts.append(bodyandsummary)
-                breakpoint()
             except:
                 pass
 
