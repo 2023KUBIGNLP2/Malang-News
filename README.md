@@ -21,7 +21,7 @@ $ streamlit run streamlit/malang_news.py
 - **뉴스를 찾을 수 없어요.** 안내 문구 출력 시 url이 올바른지 확인
 ## 프로젝트 구조
 ```
-contest_nlp2023/
+Malang_news/
 │
 ├── crawler/
 |   ├── headline_crawler_final.py
