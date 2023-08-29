@@ -88,7 +88,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--header",
-        default="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36)",
+        default="INSERT YOUR CHROME HEADER",
         type=str,
         help="개인 header를 입력합니다. 입력하지 않으면 접속에 오류가 생길 수 있습니다.",
     )
