@@ -24,7 +24,7 @@ contest_nlp2023/
 |   ├── news_crawler_final.py
 |   └── 네이버뉴스_크롤링.ipynb
 │
-├── model/ - base baseline and baseline code by version
+├── model/
 │   ├── BART/
 |   |   ├── KoBART_navernews.ipynb
 |   |   ├── 생성요약_KoBART.ipynb
