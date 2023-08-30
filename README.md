@@ -10,16 +10,21 @@
 [Team Notion](https://enchanted-gum-e41.notion.site/KUBIG-NLP-Project-659dac81a4f34a7883022319551751dd?pvs=4)  
 [시연 영상](https://youtu.be/0Mwv_NaXx0E)
 ## 서비스 이용하기
-**`malang_news.py`에 본인의 Huggingface API Key, OpenAI API Key를 입력해야 합니다.**
 ```
 $ pip install -r requirements.txt
 $ streamlit run streamlit/malang_news.py
 ```
 > 1. 원하는 뉴스의 URL 입력 (네이버 뉴스에 최적화)
 > 2. Inference 기다리고 결과 받아보기
-- 말투 변환 및 키워드 질문 정도 조절 가능
+
+### 주의사항
+- **`malang_news.py`에 본인의 Huggingface API Key, OpenAI API Key를 입력해야 합니다.**
+```
+API_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" # Huggingface
+API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" # OpenAI
+```
 - **아직 모델을 불러오는 중이에요.** 안내 문구 출력 시 조금 뒤 다시 시도
-- **뉴스를 찾을 수 없어요.** 안내 문구 출력 시 url이 올바른지 확인
+- **뉴스를 찾을 수 없어요.** 안내 문구 출력 시 URL이 올바른지 확인
 ## 프로젝트 구조
 ```
 Malang_news/
